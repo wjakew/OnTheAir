@@ -5,9 +5,10 @@ all rights reserved
  */
 package com.jakubwawak.ontheair;
 
-import com.jakubwawak.radioplayer.RadioPlayer;
+import com.jakubwawak.gui.main_window;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.security.NoSuchAlgorithmException;
 import javazoom.jl.decoder.JavaLayerException;
 
 /**
@@ -16,13 +17,9 @@ import javazoom.jl.decoder.JavaLayerException;
  */
 public class Tests {
     
-    Tests() throws IOException, MalformedURLException, JavaLayerException{
+    Tests() throws IOException, MalformedURLException, JavaLayerException, NoSuchAlgorithmException{
         
-        RadioPlayer rp = new RadioPlayer("https://stream.nowyswiat.online/mp3");
-        
-        rp.play();
-        
-        
+        new main_window();
     }
     
 }

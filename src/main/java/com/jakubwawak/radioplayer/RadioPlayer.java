@@ -33,6 +33,15 @@ public class RadioPlayer {
     }
     
     /**
+     * Constructor using RadioStation object
+     * @param object 
+     */
+    public RadioPlayer(RadioStation radio){
+        current_url = radio.radiostation_url;
+        playing = false;
+    }
+    
+    /**
      * Main function for playing radio data
      * @throws MalformedURLException
      * @throws IOException
@@ -44,12 +53,23 @@ public class RadioPlayer {
             urlConnection = new URL(current_url).openConnection ();
             
             urlConnection.connect();
-            
+  
             main_player = new Player (urlConnection.getInputStream());
             
             main_player.play();
         }catch(Exception e){
             System.out.println("Failed to play ("+e.toString()+")");
+        }
+    }
+    /**
+     * Function for stoping stream
+     */
+    public void stop(){
+        try{
+            main_player.close();
+        
+        }catch(Exception e){
+            System.out.println("Failed to stop: ("+e.toString()+")");
         }
     }
     

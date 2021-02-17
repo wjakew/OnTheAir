@@ -7,6 +7,7 @@ package com.jakubwawak.ontheair;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.security.NoSuchAlgorithmException;
 import javazoom.jl.decoder.JavaLayerException;
 
 /**
@@ -15,7 +16,7 @@ import javazoom.jl.decoder.JavaLayerException;
  */
 public class OnTheAir {
     
-    public static void main(String[] args) throws IOException, MalformedURLException, JavaLayerException{
+    public static void main(String[] args) throws IOException, MalformedURLException, JavaLayerException, NoSuchAlgorithmException{
         new Tests();
     }
     
