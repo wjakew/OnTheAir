@@ -46,7 +46,7 @@ public class RadioStation {
      * Function for showing data from object
      * @return String
      */
-    String show_data(){
+    public String show_data(){
         String data = radiostation_name +"\n";
         
         data = data + "url: "+radiostation_url +"\n";
@@ -62,5 +62,5 @@ public class RadioStation {
         }
         return data;
     }
-    
+
 }

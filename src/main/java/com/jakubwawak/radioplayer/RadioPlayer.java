@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
@@ -16,7 +18,7 @@ import javazoom.jl.player.Player;
  *Object for loading stream data
  * @author jakubwawak
  */
-public class RadioPlayer {
+public class RadioPlayer implements Runnable{
     
     String current_url;
     boolean playing;
@@ -72,6 +74,15 @@ public class RadioPlayer {
             System.out.println("Failed to stop: ("+e.toString()+")");
         }
     }
-    
-    
+
+    @Override
+    public void run() {
+        try {
+            play();
+        } catch (IOException ex) {
+            System.out.println("Error: "+ex.toString());
+        } catch (JavaLayerException ex) {
+            System.out.println("Error: "+ex.toString());
+        }
+    }
 }

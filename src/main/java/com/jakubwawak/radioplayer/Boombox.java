@@ -11,9 +11,11 @@ import java.util.ArrayList;
  *Object for storing radiostations
  * @author x
  */
+
 public class Boombox {
     
     private ArrayList<RadioStation> radio_list;
+    public String picked;
     
     /**
      * Constructor
@@ -22,6 +24,7 @@ public class Boombox {
         radio_list = new ArrayList<>();
         radio_list.add(new RadioStation("Radio Nowy Świat","https://stream.nowyswiat.online/mp3"));
         radio_list.add(new RadioStation("Radio LUZ","http://radioluz.pwr.edu.pl:8000/luzhifi.mp3"));
+        picked = "";
     }
     
     /**
@@ -58,6 +61,7 @@ public class Boombox {
     public RadioStation get_radio(String title){
         for(RadioStation radio : radio_list){
             if ( radio.radiostation_name.equals(title) ){
+                picked = title;
                 return radio;
             }
         }

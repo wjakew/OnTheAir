@@ -8,12 +8,15 @@ package com.jakubwawak.gui;
 import com.jakubwawak.radioplayer.Boombox;
 import com.jakubwawak.radioplayer.RadioPlayer;
 import com.jakubwawak.radioplayer.RadioStation;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Insets;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javazoom.jl.decoder.JavaLayerException;
 
 /**
  *Main window object
@@ -24,7 +27,7 @@ public class main_window extends javax.swing.JFrame {
     /**
      * Creates new form main_window
      */
-    String version = "v.1.0.0A1";
+    String version = "v.1.0.0B1";
     final String BGC_SRC = "bcg.jpg";
     Background_Panel panel;
     Boombox boombox;
@@ -33,10 +36,12 @@ public class main_window extends javax.swing.JFrame {
     public main_window() throws IOException {
         panel = new Background_Panel(new ImageIcon(BGC_SRC).getImage());
         boombox = new Boombox();
+        this.setUndecorated(true);
         initComponents();
         load_window();
         this.getContentPane().add(panel);
         this.setLocationRelativeTo(null);
+        locate_window();
         setVisible(true);
     }
     
@@ -49,13 +54,23 @@ public class main_window extends javax.swing.JFrame {
     }
     
     /**
+     * Function for locating window on screen
+     */
+    void locate_window(){
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            GraphicsDevice defaultScreen = ge.getDefaultScreenDevice();
+            Rectangle rect = defaultScreen.getDefaultConfiguration().getBounds();
+            int x = (int) rect.getMaxX() - this.getWidth();
+            int y = 23;
+            this.setLocation(x, y);
+            this.setVisible(true);
+    }
+    
+    /**
      * Function for loading data to ComboBox model
      */
     void load_default_presets(){
-        DefaultComboBoxModel dcm = new DefaultComboBoxModel();
-        dcm.addAll(boombox.list_of_names());
-        combobox_presets.setModel(dcm);
-        combobox_presets.setSelectedIndex(0);
+        label_radiostationname.setText(boombox.list_of_names().get(0));
     }
     
     /**
@@ -63,8 +78,8 @@ public class main_window extends javax.swing.JFrame {
      * @return RadioStation
      */
     RadioStation get_selected_station(){
-        String title = combobox_presets.getSelectedObjects().toString();
-        return boombox.get_radio(title);
+        System.out.println("Selected radio: "+label_radiostationname.getText());
+        return boombox.get_radio(label_radiostationname.getText());
     }
 
     /**
@@ -76,128 +91,149 @@ public class main_window extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        combobox_presets = new javax.swing.JComboBox<>();
-        button_play = new javax.swing.JButton();
         label_version = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        label_radiostationname = new javax.swing.JLabel();
+        label_play = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        label_closeprogram = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("OnTheAir");
 
-        combobox_presets.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        combobox_presets.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        combobox_presets.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                combobox_presetsActionPerformed(evt);
-            }
-        });
-
-        button_play.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        button_play.setText("Play");
-        button_play.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_playActionPerformed(evt);
-            }
-        });
-
+        label_version.setFont(new java.awt.Font("Bodoni 72", 0, 13)); // NOI18N
         label_version.setText("v.1.0.0");
+        label_version.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_versionMouseClicked(evt);
+            }
+        });
 
-        jMenu1.setText("Actions");
+        label_radiostationname.setFont(new java.awt.Font("Bodoni 72", 0, 36)); // NOI18N
+        label_radiostationname.setForeground(new java.awt.Color(255, 255, 255));
+        label_radiostationname.setText("RadioStation Name");
+        label_radiostationname.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_radiostationnameMouseClicked(evt);
+            }
+        });
 
-        jMenuItem1.setText("Log In");
-        jMenu1.add(jMenuItem1);
+        label_play.setFont(new java.awt.Font("Bodoni 72", 0, 36)); // NOI18N
+        label_play.setForeground(new java.awt.Color(255, 255, 255));
+        label_play.setText("Play");
+        label_play.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_playMouseClicked(evt);
+            }
+        });
 
-        jMenuBar1.add(jMenu1);
+        jLabel1.setFont(new java.awt.Font("Bodoni 72", 0, 18)); // NOI18N
+        jLabel1.setText("My Account");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
 
-        jMenu2.setText("Presets");
-
-        jMenuItem2.setText("Manage");
-        jMenu2.add(jMenuItem2);
-
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
+        label_closeprogram.setFont(new java.awt.Font("Bodoni MT", 0, 11)); // NOI18N
+        label_closeprogram.setForeground(new java.awt.Color(255, 255, 255));
+        label_closeprogram.setText("Close program");
+        label_closeprogram.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_closeprogramMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(38, 38, 38)
-                                .addComponent(combobox_presets, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(161, 161, 161)
-                                .addComponent(button_play, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 35, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(label_radiostationname)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
+                        .addComponent(label_play, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(label_version)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(label_closeprogram))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(158, 158, 158)
-                .addComponent(combobox_presets, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(button_play, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(label_version)
+                .addComponent(label_closeprogram)
+                .addGap(2, 2, 2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_radiostationname)
+                    .addComponent(label_play))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(label_version))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void button_playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_playActionPerformed
-        String state = button_play.getText();
+    private void label_playMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_playMouseClicked
+        String state = label_play.getText();
         RadioStation selected_radio = get_selected_station();
-        try{
-            switch(state){
-                case "Play":
-                    player = new RadioPlayer(selected_radio);
-                    player.play();
-                    button_play.setText("Stop");
-                    break;
-                case "Stop":
-                    player.stop();
-                    player = null;
-                    button_play.setText("Play");
-                    break;
-                default:
-                    System.out.println("Błąd");
-                    break;
-            }
-        } catch (IOException ex) {
-            System.out.println(ex.toString());
-        } catch (JavaLayerException ex) {
-            System.out.println(ex.toString());
+        switch(state){
+            case "Play":
+                player = new RadioPlayer(selected_radio);
+                Thread player_thread = new Thread(player);
+                player_thread.start();
+                label_play.setText("Stop");
+                break;
+            case "Stop":
+                player.stop();
+                player = null;
+                label_play.setText("Play");
+                break;
+            default:
+                System.out.println("Błąd");
+                break;
+        }
+    }//GEN-LAST:event_label_playMouseClicked
+
+    private void label_radiostationnameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_radiostationnameMouseClicked
+        if ( player != null){
+            player.stop();
+            label_play.setText("Play");
+        }
+        System.out.println("Radiostation change invoked");
+        new radiostation_picker_window(this,true,boombox);
+        if ( !boombox.picked.equals("") ){
+            label_radiostationname.setText(boombox.picked);
         }
         
-    }//GEN-LAST:event_button_playActionPerformed
+    }//GEN-LAST:event_label_radiostationnameMouseClicked
 
-    private void combobox_presetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox_presetsActionPerformed
-        
-    }//GEN-LAST:event_combobox_presetsActionPerformed
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        System.out.println("Account settings invoked");
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void label_closeprogramMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_closeprogramMouseClicked
+        dispose();
+    }//GEN-LAST:event_label_closeprogramMouseClicked
+
+    private void label_versionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_versionMouseClicked
+        //this.setUndecorated(false);
+    }//GEN-LAST:event_label_versionMouseClicked
 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton button_play;
-    private javax.swing.JComboBox<String> combobox_presets;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel label_closeprogram;
+    private javax.swing.JLabel label_play;
+    private javax.swing.JLabel label_radiostationname;
     private javax.swing.JLabel label_version;
     // End of variables declaration//GEN-END:variables
 }
