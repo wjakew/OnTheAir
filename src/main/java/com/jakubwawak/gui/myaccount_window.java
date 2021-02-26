@@ -5,6 +5,9 @@ all rights reserved
  */
 package com.jakubwawak.gui;
 
+import com.jakubwawak.radioplayer.Boombox;
+import java.awt.Color;
+
 /**
  *
  * @author jakubwawak
@@ -14,9 +17,15 @@ public class myaccount_window extends javax.swing.JDialog {
     /**
      * Creates new form myaccount_window
      */
-    public myaccount_window(java.awt.Frame parent, boolean modal) {
+    Boombox boombox;
+    public myaccount_window(java.awt.Frame parent, boolean modal,Boombox boombox) {
         super(parent, modal);
+        this.boombox = boombox;
+        this.setUndecorated(true);
         initComponents();
+        getContentPane().setBackground(Color.BLACK);
+        this.setLocationRelativeTo(parent);
+        setVisible(true);
     }
 
     /**
@@ -31,33 +40,42 @@ public class myaccount_window extends javax.swing.JDialog {
         label_syncpresets = new javax.swing.JLabel();
         label_loguser1 = new javax.swing.JLabel();
         label_addradio = new javax.swing.JLabel();
+        label_close = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        label_syncpresets.setFont(new java.awt.Font("Bodoni 72", 0, 36)); // NOI18N
+        label_syncpresets.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
+        label_syncpresets.setForeground(new java.awt.Color(255, 255, 255));
         label_syncpresets.setText("Sync Presets");
 
-        label_loguser1.setFont(new java.awt.Font("Bodoni 72", 0, 36)); // NOI18N
-        label_loguser1.setText("Zaloguj");
+        label_loguser1.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
+        label_loguser1.setForeground(new java.awt.Color(255, 255, 255));
+        label_loguser1.setText("Log in");
 
-        label_addradio.setFont(new java.awt.Font("Bodoni 72", 0, 36)); // NOI18N
+        label_addradio.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
+        label_addradio.setForeground(new java.awt.Color(255, 255, 255));
         label_addradio.setText("Add Radio");
+
+        label_close.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
+        label_close.setForeground(new java.awt.Color(255, 255, 255));
+        label_close.setText("Close");
+        label_close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_closeMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(label_addradio))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(label_loguser1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(label_syncpresets)))
+                    .addComponent(label_syncpresets)
+                    .addComponent(label_addradio)
+                    .addComponent(label_loguser1)
+                    .addComponent(label_close))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -65,19 +83,26 @@ public class myaccount_window extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(label_loguser1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(label_addradio)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label_syncpresets)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(label_close)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void label_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_closeMouseClicked
+        dispose();
+    }//GEN-LAST:event_label_closeMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel label_addradio;
+    private javax.swing.JLabel label_close;
     private javax.swing.JLabel label_loguser1;
     private javax.swing.JLabel label_syncpresets;
     // End of variables declaration//GEN-END:variables

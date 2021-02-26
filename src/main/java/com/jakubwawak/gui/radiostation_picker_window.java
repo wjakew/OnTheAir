@@ -22,10 +22,11 @@ public class radiostation_picker_window extends javax.swing.JDialog {
     public radiostation_picker_window(java.awt.Frame parent, boolean modal,Boombox boombox) {
         super(parent, modal);
         this.boombox = boombox;
+        this.setUndecorated(true);
         initComponents();
         load_list();
         getContentPane().setBackground(Color.BLACK);
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(parent);
         setVisible(true);
     }
 
@@ -48,28 +49,25 @@ public class radiostation_picker_window extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         boombox_list = new javax.swing.JList<>();
-        button_change = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Changer");
         setBackground(new java.awt.Color(0, 0, 0));
 
         boombox_list.setBackground(new java.awt.Color(0, 0, 0));
-        boombox_list.setFont(new java.awt.Font("Bodoni 72", 0, 24)); // NOI18N
+        boombox_list.setFont(new java.awt.Font("Calisto MT", 0, 24)); // NOI18N
         boombox_list.setForeground(new java.awt.Color(255, 255, 255));
         boombox_list.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(boombox_list);
-
-        button_change.setText("Change");
-        button_change.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_changeActionPerformed(evt);
+        boombox_list.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                boombox_listMouseClicked(evt);
             }
         });
+        jScrollPane1.setViewportView(boombox_list);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,11 +75,7 @@ public class radiostation_picker_window extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(button_change, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -89,23 +83,21 @@ public class radiostation_picker_window extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button_change)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void button_changeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_changeActionPerformed
-        boombox.picked = boombox_list.getSelectedValue();
+    private void boombox_listMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boombox_listMouseClicked
+        String pick = boombox_list.getSelectedValue().toString();
+        boombox.picked = pick;
         dispose();
-    }//GEN-LAST:event_button_changeActionPerformed
+    }//GEN-LAST:event_boombox_listMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> boombox_list;
-    private javax.swing.JButton button_change;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

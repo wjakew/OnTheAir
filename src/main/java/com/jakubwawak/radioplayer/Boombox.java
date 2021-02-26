@@ -22,7 +22,7 @@ public class Boombox {
      */
     public Boombox(){
         radio_list = new ArrayList<>();
-        radio_list.add(new RadioStation("Radio Nowy Świat","https://stream.nowyswiat.online/mp3"));
+        radio_list.add(new RadioStation("Radio Nowy Swiat","https://stream.nowyswiat.online/mp3"));
         radio_list.add(new RadioStation("Radio LUZ","http://radioluz.pwr.edu.pl:8000/luzhifi.mp3"));
         picked = "";
     }

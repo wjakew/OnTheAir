@@ -8,15 +8,12 @@ package com.jakubwawak.gui;
 import com.jakubwawak.radioplayer.Boombox;
 import com.jakubwawak.radioplayer.RadioPlayer;
 import com.jakubwawak.radioplayer.RadioStation;
-import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.Insets;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.io.IOException;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  *Main window object
@@ -49,6 +46,9 @@ public class main_window extends javax.swing.JFrame {
      * Function for loading default window content
      */
     void load_window(){
+        label_error.setVisible(false);
+        label_radiostationname.setHorizontalAlignment(JLabel.CENTER);
+        label_radiostationname.setVerticalAlignment(JLabel.CENTER);
         label_version.setText(version);
         load_default_presets();
     }
@@ -94,13 +94,14 @@ public class main_window extends javax.swing.JFrame {
         label_version = new javax.swing.JLabel();
         label_radiostationname = new javax.swing.JLabel();
         label_play = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        label_iotions = new javax.swing.JLabel();
         label_closeprogram = new javax.swing.JLabel();
+        label_error = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("OnTheAir");
 
-        label_version.setFont(new java.awt.Font("Bodoni 72", 0, 13)); // NOI18N
+        label_version.setFont(new java.awt.Font("Calisto MT", 0, 13)); // NOI18N
         label_version.setText("v.1.0.0");
         label_version.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -108,7 +109,7 @@ public class main_window extends javax.swing.JFrame {
             }
         });
 
-        label_radiostationname.setFont(new java.awt.Font("Bodoni 72", 0, 36)); // NOI18N
+        label_radiostationname.setFont(new java.awt.Font("Elephant", 0, 36)); // NOI18N
         label_radiostationname.setForeground(new java.awt.Color(255, 255, 255));
         label_radiostationname.setText("RadioStation Name");
         label_radiostationname.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -117,7 +118,7 @@ public class main_window extends javax.swing.JFrame {
             }
         });
 
-        label_play.setFont(new java.awt.Font("Bodoni 72", 0, 36)); // NOI18N
+        label_play.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
         label_play.setForeground(new java.awt.Color(255, 255, 255));
         label_play.setText("Play");
         label_play.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -126,56 +127,64 @@ public class main_window extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Bodoni 72", 0, 18)); // NOI18N
-        jLabel1.setText("My Account");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        label_iotions.setFont(new java.awt.Font("Calisto MT", 0, 18)); // NOI18N
+        label_iotions.setForeground(new java.awt.Color(255, 255, 255));
+        label_iotions.setText("Options");
+        label_iotions.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
+                label_iotionsMouseClicked(evt);
             }
         });
 
-        label_closeprogram.setFont(new java.awt.Font("Bodoni MT", 0, 11)); // NOI18N
+        label_closeprogram.setFont(new java.awt.Font("Calisto MT", 0, 18)); // NOI18N
         label_closeprogram.setForeground(new java.awt.Color(255, 255, 255));
-        label_closeprogram.setText("Close program");
+        label_closeprogram.setText("X");
         label_closeprogram.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 label_closeprogramMouseClicked(evt);
             }
         });
 
+        label_error.setFont(new java.awt.Font("Calisto MT", 0, 13)); // NOI18N
+        label_error.setText("Player faliure");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(label_iotions)
+                        .addGap(115, 115, 115)
+                        .addComponent(label_error)
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(label_closeprogram))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(label_radiostationname)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
-                        .addComponent(label_play, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addContainerGap()
+                        .addComponent(label_version)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(label_version)))
+                        .addComponent(label_play, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(34, Short.MAX_VALUE)
+                        .addComponent(label_radiostationname)
+                        .addGap(28, 28, 28)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(label_closeprogram))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(label_closeprogram)
-                .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_radiostationname)
-                    .addComponent(label_play))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(label_version))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(label_iotions)
+                    .addComponent(label_closeprogram)
+                    .addComponent(label_error))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                .addComponent(label_radiostationname)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label_version, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(label_play, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
 
         pack();
@@ -183,13 +192,20 @@ public class main_window extends javax.swing.JFrame {
 
     private void label_playMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_playMouseClicked
         String state = label_play.getText();
+        label_error.setVisible(false);
         RadioStation selected_radio = get_selected_station();
         switch(state){
             case "Play":
-                player = new RadioPlayer(selected_radio);
-                Thread player_thread = new Thread(player);
-                player_thread.start();
-                label_play.setText("Stop");
+                try{
+                    player = new RadioPlayer(selected_radio);
+                    Thread player_thread = new Thread(player);
+                    player_thread.start();
+                    label_play.setText("Stop");
+                    label_play.setVerticalAlignment(JLabel.CENTER);
+                }catch(Exception e){
+                    label_error.setVisible(true);
+                }
+                
                 break;
             case "Stop":
                 player.stop();
@@ -211,27 +227,32 @@ public class main_window extends javax.swing.JFrame {
         new radiostation_picker_window(this,true,boombox);
         if ( !boombox.picked.equals("") ){
             label_radiostationname.setText(boombox.picked);
+            label_radiostationname.setVerticalAlignment(JLabel.CENTER);
         }
         
     }//GEN-LAST:event_label_radiostationnameMouseClicked
 
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+    private void label_iotionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_iotionsMouseClicked
         System.out.println("Account settings invoked");
-    }//GEN-LAST:event_jLabel1MouseClicked
+        new myaccount_window(this,true,boombox);
+    }//GEN-LAST:event_label_iotionsMouseClicked
 
     private void label_closeprogramMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_closeprogramMouseClicked
         dispose();
     }//GEN-LAST:event_label_closeprogramMouseClicked
 
     private void label_versionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_versionMouseClicked
-        //this.setUndecorated(false);
+        this.setUndecorated(false);
+        this.validate();
+        this.repaint();
     }//GEN-LAST:event_label_versionMouseClicked
 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel label_closeprogram;
+    private javax.swing.JLabel label_error;
+    private javax.swing.JLabel label_iotions;
     private javax.swing.JLabel label_play;
     private javax.swing.JLabel label_radiostationname;
     private javax.swing.JLabel label_version;
