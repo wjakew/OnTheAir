@@ -55,6 +55,11 @@ public class myaccount_window extends javax.swing.JDialog {
         label_addradio.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
         label_addradio.setForeground(new java.awt.Color(255, 255, 255));
         label_addradio.setText("Add Radio");
+        label_addradio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_addradioMouseClicked(evt);
+            }
+        });
 
         label_close.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
         label_close.setForeground(new java.awt.Color(255, 255, 255));
@@ -98,6 +103,10 @@ public class myaccount_window extends javax.swing.JDialog {
     private void label_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_closeMouseClicked
         dispose();
     }//GEN-LAST:event_label_closeMouseClicked
+
+    private void label_addradioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_addradioMouseClicked
+        new addradio_window(this,true,boombox);
+    }//GEN-LAST:event_label_addradioMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

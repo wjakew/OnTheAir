@@ -6,6 +6,7 @@ all rights reserved
 package com.jakubwawak.ontheair;
 
 import com.jakubwawak.gui.main_window;
+import com.jakubwawak.gui.main_window2;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.security.NoSuchAlgorithmException;
@@ -16,6 +17,8 @@ import javazoom.jl.decoder.JavaLayerException;
  * @author jakubwawak
  */
 public class Tests {
+    
+    
     
     Tests() throws IOException, MalformedURLException, JavaLayerException, NoSuchAlgorithmException{
         

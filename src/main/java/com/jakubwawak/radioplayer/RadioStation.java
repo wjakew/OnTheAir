@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *Object for storing presets
- * @author x
+ * @author jakubwawak
  */
 public class RadioStation {
     
@@ -24,7 +24,7 @@ public class RadioStation {
      * @param preset_name
      * @param url 
      */
-    RadioStation(String preset_name,String url){
+    public RadioStation(String preset_name,String url){
         this.radiostation_name = preset_name;
         this.radiostation_url = url;
         
@@ -61,6 +61,16 @@ public class RadioStation {
             data = data + "Id of the playlist: "+playlist_id;
         }
         return data;
+    }
+    
+    /**
+     * Function for comparing two radiostation objects
+     * @param another
+     * @return Boolean
+     */
+    public boolean compare(RadioStation another){
+        return this.radiostation_name.equals(another.radiostation_name)
+                && this.radiostation_url.equals(another.radiostation_url);
     }
 
 }

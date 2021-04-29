@@ -6,6 +6,7 @@ all rights reserved
 package com.jakubwawak.radioplayer;
 
 import java.util.ArrayList;
+import org.apache.commons.validator.UrlValidator;
 
 /**
  *Object for storing radiostations
@@ -24,7 +25,7 @@ public class Boombox {
         radio_list = new ArrayList<>();
         radio_list.add(new RadioStation("Radio Nowy Swiat","https://stream.nowyswiat.online/mp3"));
         radio_list.add(new RadioStation("Radio LUZ","http://radioluz.pwr.edu.pl:8000/luzhifi.mp3"));
-        picked = "";
+        picked = radio_list.get(0).radiostation_name;
     }
     
     /**
@@ -66,6 +67,44 @@ public class Boombox {
             }
         }
         return null;
+    }
+    
+    /**
+     * Function for checking for duplicate
+     * @param radiostation
+     * @return boolean
+     */
+    boolean check_for_duplicat(RadioStation radiostation){
+        for( RadioStation rs : radio_list){
+            if ( rs.compare(radiostation)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Function for adding new radio to the list
+     * @param radio 
+     */
+    public boolean add_radio(RadioStation radio){
+        if ( !check_for_duplicat(radio)){
+            radio_list.add(radio);
+            return true;
+        }
+        return false;
+        
+    }
+    
+    /**
+     * Function for validation url
+     * @param url
+     * @return boolean
+     */
+    boolean validate_url(String url){
+        String[] schemes = {"http","https"};
+        UrlValidator urlValidator = new UrlValidator(schemes);
+        return urlValidator.isValid(url);
     }
     
 }
