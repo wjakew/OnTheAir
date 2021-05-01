@@ -24,7 +24,7 @@ public class main_window extends javax.swing.JFrame {
     /**
      * Creates new form main_window
      */
-    String version = "v.1.0.0B2";
+    String version = "v.1.0.0B3";
     final String BGC_SRC = "bcg.jpg";
     Boombox boombox;
     RadioPlayer player;
@@ -163,9 +163,9 @@ public class main_window extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label_iotions)
                     .addComponent(label_error))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
                 .addComponent(label_radiostationname)
-                .addGap(39, 39, 39)
+                .addGap(94, 94, 94)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label_version)
                     .addComponent(label_play))

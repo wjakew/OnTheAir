@@ -28,7 +28,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="label_syncpresets" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="label_addradio" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="label_loguser1" min="-2" max="-2" attributes="0"/>
+                  <Component id="label_login" min="-2" max="-2" attributes="0"/>
                   <Component id="label_close" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -39,7 +39,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-              <Component id="label_loguser1" min="-2" max="-2" attributes="0"/>
+              <Component id="label_login" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="label_addradio" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -63,7 +63,7 @@
         <Property name="text" type="java.lang.String" value="Sync Presets"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="label_loguser1">
+    <Component class="javax.swing.JLabel" name="label_login">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Calisto MT" size="36" style="0"/>
@@ -73,6 +73,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Log in"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="label_loginMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="label_addradio">
       <Properties>

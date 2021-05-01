@@ -5,11 +5,15 @@ all rights reserved
  */
 package com.jakubwawak.gui;
 
+import com.jakubwawak.ontheair.Database;
 import com.jakubwawak.radioplayer.Boombox;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- *
+ *Function for loading myaccount window
  * @author jakubwawak
  */
 public class myaccount_window extends javax.swing.JDialog {
@@ -17,6 +21,7 @@ public class myaccount_window extends javax.swing.JDialog {
     /**
      * Creates new form myaccount_window
      */
+
     Boombox boombox;
     public myaccount_window(java.awt.Frame parent, boolean modal,Boombox boombox) {
         super(parent, modal);
@@ -38,7 +43,7 @@ public class myaccount_window extends javax.swing.JDialog {
     private void initComponents() {
 
         label_syncpresets = new javax.swing.JLabel();
-        label_loguser1 = new javax.swing.JLabel();
+        label_login = new javax.swing.JLabel();
         label_addradio = new javax.swing.JLabel();
         label_close = new javax.swing.JLabel();
 
@@ -48,9 +53,14 @@ public class myaccount_window extends javax.swing.JDialog {
         label_syncpresets.setForeground(new java.awt.Color(255, 255, 255));
         label_syncpresets.setText("Sync Presets");
 
-        label_loguser1.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
-        label_loguser1.setForeground(new java.awt.Color(255, 255, 255));
-        label_loguser1.setText("Log in");
+        label_login.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
+        label_login.setForeground(new java.awt.Color(255, 255, 255));
+        label_login.setText("Log in");
+        label_login.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_loginMouseClicked(evt);
+            }
+        });
 
         label_addradio.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
         label_addradio.setForeground(new java.awt.Color(255, 255, 255));
@@ -79,7 +89,7 @@ public class myaccount_window extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label_syncpresets)
                     .addComponent(label_addradio)
-                    .addComponent(label_loguser1)
+                    .addComponent(label_login)
                     .addComponent(label_close))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -87,7 +97,7 @@ public class myaccount_window extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(label_loguser1)
+                .addComponent(label_login)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(label_addradio)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -108,11 +118,35 @@ public class myaccount_window extends javax.swing.JDialog {
         new addradio_window(this,true,boombox);
     }//GEN-LAST:event_label_addradioMouseClicked
 
+    private void label_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_loginMouseClicked
+        try {
+            Database database = new Database();
+            
+            database.connect("localhost", "ontheair_database", "root", "password");
+            
+            if ( database.connected ){
+                new login_window(this,true,database);
+                if ( database.ota_user_id > 0){
+                    label_login.setText(database.log_ota_name(database.ota_user_id));    
+                }
+            }
+            else{
+                label_login.setText("No database");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(myaccount_window.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(myaccount_window.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_label_loginMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel label_addradio;
     private javax.swing.JLabel label_close;
-    private javax.swing.JLabel label_loguser1;
+    private javax.swing.JLabel label_login;
     private javax.swing.JLabel label_syncpresets;
     // End of variables declaration//GEN-END:variables
 }
