@@ -5,6 +5,8 @@ all rights reserved
  */
 package com.jakubwawak.radioplayer;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -31,6 +33,19 @@ public class RadioStation {
         playlist_id = -1;
         radiostation_desc = "";
         radiostation_id = -1;
+    }
+    
+    /**
+     * Constructor for database data
+     * @param data 
+     */
+    public RadioStation(ResultSet data) throws SQLException{
+        radiostation_name = data.getString("radiostation_name");
+        radiostation_url = data.getString("radiostation_url");
+        
+        playlist_id = data.getInt("playlist_id");
+        radiostation_desc = "";
+        radiostation_id = data.getInt("radiostation_id");
     }
     
     

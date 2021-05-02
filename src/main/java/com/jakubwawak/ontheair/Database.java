@@ -79,6 +79,29 @@ public class Database {
         }
     }
     
+    /**
+     * Function for loading presets
+     */
+    public ResultSet load_presets() throws SQLException{
+        String query = "SELECT * FROM RADIOSTATION WHERE OTA_USER_ID = ?;";
+        
+        try{
+            PreparedStatement ppst = con.prepareStatement(query);
+            
+            ppst.setInt(1,ota_user_id);
+            
+            ResultSet rs = ppst.executeQuery();
+            
+            if ( rs.next() ){
+                return rs;
+            }
+            return null;
+        }catch(SQLException e){
+            System.out.println("Database error: "+e.toString());
+            return null;
+        }
+    }
+    
     
     /**
      * Function for logging ota user

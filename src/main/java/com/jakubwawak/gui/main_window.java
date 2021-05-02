@@ -13,6 +13,9 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 
 /**
@@ -24,7 +27,7 @@ public class main_window extends javax.swing.JFrame {
     /**
      * Creates new form main_window
      */
-    String version = "v.1.0.0B3";
+    String version = "v.1.0.0B4";
     final String BGC_SRC = "bcg.jpg";
     Boombox boombox;
     RadioPlayer player;
@@ -219,7 +222,13 @@ public class main_window extends javax.swing.JFrame {
 
     private void label_iotionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_iotionsMouseClicked
         System.out.println("Account settings invoked");
-        new myaccount_window(this,true,boombox);
+        try {
+            new myaccount_window(this,true,boombox);
+        } catch (SQLException ex) {
+            System.out.println("Database error: "+ex.toString());
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Java error: "+ex.toString());
+        }
     }//GEN-LAST:event_label_iotionsMouseClicked
 
     private void label_versionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_versionMouseClicked

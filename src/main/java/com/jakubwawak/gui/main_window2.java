@@ -9,6 +9,9 @@ import com.jakubwawak.radioplayer.Boombox;
 import com.jakubwawak.radioplayer.RadioPlayer;
 import com.jakubwawak.radioplayer.RadioStation;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 
 /**
@@ -206,7 +209,13 @@ public class main_window2 extends javax.swing.JFrame {
     }//GEN-LAST:event_button_playActionPerformed
 
     private void menu_presetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_presetsActionPerformed
-        new myaccount_window(this,true,boombox);
+        try {
+            new myaccount_window(this,true,boombox);
+        } catch (SQLException ex) {
+            Logger.getLogger(main_window2.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(main_window2.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_menu_presetsActionPerformed
 
 

@@ -5,6 +5,8 @@ all rights reserved
  */
 package com.jakubwawak.radioplayer;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import org.apache.commons.validator.UrlValidator;
 
@@ -18,13 +20,29 @@ public class Boombox {
     private ArrayList<RadioStation> radio_list;
     public String picked;
     
+    public ResultSet database_data;
+    
     /**
      * Constructor
      */
     public Boombox(){
         radio_list = new ArrayList<>();
+        database_data = null;
         radio_list.add(new RadioStation("Radio Nowy Swiat","https://stream.nowyswiat.online/mp3"));
         radio_list.add(new RadioStation("Radio LUZ","http://radioluz.pwr.edu.pl:8000/luzhifi.mp3"));
+        picked = radio_list.get(0).radiostation_name;
+    }
+    
+    /**
+     * Constructor for database data
+     * @param database_data 
+     */
+    public Boombox(ResultSet database_data) throws SQLException{
+        this.database_data = database_data;
+        radio_list = new ArrayList<>();
+        while(database_data.next()){
+            radio_list.add(new RadioStation(database_data));
+        }
         picked = radio_list.get(0).radiostation_name;
     }
     

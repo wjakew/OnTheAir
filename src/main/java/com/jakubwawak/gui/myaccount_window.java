@@ -21,15 +21,17 @@ public class myaccount_window extends javax.swing.JDialog {
     /**
      * Creates new form myaccount_window
      */
-
+    Database database;
     Boombox boombox;
-    public myaccount_window(java.awt.Frame parent, boolean modal,Boombox boombox) {
+    public myaccount_window(java.awt.Frame parent, boolean modal,Boombox boombox) throws SQLException, ClassNotFoundException {
         super(parent, modal);
         this.boombox = boombox;
+        database = new Database();
         this.setUndecorated(true);
         initComponents();
         getContentPane().setBackground(Color.BLACK);
         this.setLocationRelativeTo(parent);
+        load_window();
         setVisible(true);
     }
 
@@ -52,6 +54,11 @@ public class myaccount_window extends javax.swing.JDialog {
         label_syncpresets.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
         label_syncpresets.setForeground(new java.awt.Color(255, 255, 255));
         label_syncpresets.setText("Sync Presets");
+        label_syncpresets.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_syncpresetsMouseClicked(evt);
+            }
+        });
 
         label_login.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
         label_login.setForeground(new java.awt.Color(255, 255, 255));
@@ -117,30 +124,48 @@ public class myaccount_window extends javax.swing.JDialog {
     private void label_addradioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_addradioMouseClicked
         new addradio_window(this,true,boombox);
     }//GEN-LAST:event_label_addradioMouseClicked
-
-    private void label_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_loginMouseClicked
-        try {
-            Database database = new Database();
-            
-            database.connect("localhost", "ontheair_database", "root", "password");
-            
-            if ( database.connected ){
-                new login_window(this,true,database);
-                if ( database.ota_user_id > 0){
-                    label_login.setText(database.log_ota_name(database.ota_user_id));    
-                }
-            }
-            else{
-                label_login.setText("No database");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(myaccount_window.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(myaccount_window.class.getName()).log(Level.SEVERE, null, ex);
+    
+    /**
+     * Function for loading window
+     * @throws SQLException 
+     */
+    void load_window() throws SQLException{
+        database.connect("localhost", "ontheair_database", "root", "password");
+        
+        if ( !database.connected ){
+            System.out.println("Database connection failed");
+            label_login.setForeground(Color.BLACK);
+            label_syncpresets.setForeground(Color.BLACK);
         }
         
-        
+    }
+    private void label_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_loginMouseClicked
+        if ( label_login.getText().equals("Log in")){
+            try {
+                if ( database.connected ){
+                    new login_window(this,true,database);
+                    if ( database.ota_user_id > 0){
+                        label_login.setText(database.log_ota_name(database.ota_user_id));    
+                    }
+                }
+                else{
+                    label_login.setText("No database");
+                }
+            } catch (SQLException ex) {
+                System.out.println("Database error: "+ex.toString());
+            }
+        }
+        else{
+            label_login.setText("Log in");
+            database.ota_user_id = -1;
+        }
     }//GEN-LAST:event_label_loginMouseClicked
+
+    private void label_syncpresetsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_syncpresetsMouseClicked
+        if ( database.connected && database.ota_user_id != -1){
+            
+        }
+    }//GEN-LAST:event_label_syncpresetsMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
