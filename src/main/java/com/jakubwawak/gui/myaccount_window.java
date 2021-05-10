@@ -23,11 +23,17 @@ public class myaccount_window extends javax.swing.JDialog {
      */
     Database database;
     Boombox boombox;
-    public myaccount_window(java.awt.Frame parent, boolean modal,Boombox boombox) throws SQLException, ClassNotFoundException {
+    String version;
+    
+    boolean first_start;
+    
+    public myaccount_window(java.awt.Frame parent, boolean modal,Boombox boombox,String version) throws SQLException, ClassNotFoundException {
         super(parent, modal);
         this.boombox = boombox;
+        this.version = version;
         database = new Database();
         this.setUndecorated(true);
+        first_start = true;
         initComponents();
         getContentPane().setBackground(Color.BLACK);
         this.setLocationRelativeTo(parent);
@@ -48,6 +54,7 @@ public class myaccount_window extends javax.swing.JDialog {
         label_login = new javax.swing.JLabel();
         label_addradio = new javax.swing.JLabel();
         label_close = new javax.swing.JLabel();
+        label_information = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -87,6 +94,15 @@ public class myaccount_window extends javax.swing.JDialog {
             }
         });
 
+        label_information.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
+        label_information.setForeground(new java.awt.Color(255, 255, 255));
+        label_information.setText("Information");
+        label_information.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_informationMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -94,10 +110,11 @@ public class myaccount_window extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label_syncpresets)
                     .addComponent(label_addradio)
                     .addComponent(label_login)
-                    .addComponent(label_close))
+                    .addComponent(label_close)
+                    .addComponent(label_information)
+                    .addComponent(label_syncpresets))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -107,11 +124,13 @@ public class myaccount_window extends javax.swing.JDialog {
                 .addComponent(label_login)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(label_addradio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(label_syncpresets)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(label_information)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label_close)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
 
         pack();
@@ -130,14 +149,18 @@ public class myaccount_window extends javax.swing.JDialog {
      * @throws SQLException 
      */
     void load_window() throws SQLException{
-        database.connect("localhost", "ontheair_database", "root", "password");
-        
+        if (first_start){
+            database.connect("localhost", "ontheair_database", "root", "password");
+            first_start = false;
+        }
+        if ( database.ota_user_id != -1 ){
+            label_login.setText(database.log_ota_name(database.ota_user_id));
+        }
         if ( !database.connected ){
             System.out.println("Database connection failed");
             label_login.setForeground(Color.BLACK);
             label_syncpresets.setForeground(Color.BLACK);
         }
-        
     }
     private void label_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_loginMouseClicked
         if ( label_login.getText().equals("Log in")){
@@ -163,14 +186,25 @@ public class myaccount_window extends javax.swing.JDialog {
 
     private void label_syncpresetsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_syncpresetsMouseClicked
         if ( database.connected && database.ota_user_id != -1){
-            
+            label_syncpresets.setText("Not supported yet");
         }
     }//GEN-LAST:event_label_syncpresetsMouseClicked
+
+    private void label_informationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_informationMouseClicked
+        new information_window(this,true,database,version);
+        try {
+            load_window();
+        } catch (SQLException ex) {
+            System.out.println("Error: "+ex.toString());
+            dispose();
+        }
+    }//GEN-LAST:event_label_informationMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel label_addradio;
     private javax.swing.JLabel label_close;
+    private javax.swing.JLabel label_information;
     private javax.swing.JLabel label_login;
     private javax.swing.JLabel label_syncpresets;
     // End of variables declaration//GEN-END:variables

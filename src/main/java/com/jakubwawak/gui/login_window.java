@@ -7,6 +7,7 @@ package com.jakubwawak.gui;
 
 import com.jakubwawak.ontheair.Database;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,6 +81,11 @@ public class login_window extends javax.swing.JDialog {
                 field_passwordFocusGained(evt);
             }
         });
+        field_password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                field_passwordKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,8 +139,19 @@ public class login_window extends javax.swing.JDialog {
     private void label_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_loginMouseClicked
         try {
             if ( database.log_ota_user(field_login.getText(), field_password.getText()) > 0 ){
+                System.out.println("Trying to log in.. ("+field_login.getText()+")");
                 database.log_ota_user(field_login.getText(), field_password.getText());
+                if ( database.ota_user_id != -1){
+                    System.out.println("User succesfully logged in");
+                }
+                else{
+                    System.out.println("User failed to log in");
+                }
                 dispose();
+            }
+            else{
+                field_login.setText("Wrong login");
+                field_password.setText("password");
             }
         } catch (SQLException ex) {
             field_login.setText("Program error");
@@ -144,6 +161,34 @@ public class login_window extends javax.swing.JDialog {
             label_login.setEnabled(false);
         }
     }//GEN-LAST:event_label_loginMouseClicked
+
+    private void field_passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_field_passwordKeyPressed
+        if ( evt.getKeyCode() == KeyEvent.VK_ENTER ){
+            try {
+                if ( database.log_ota_user(field_login.getText(), field_password.getText()) > 0 ){
+                    System.out.println("Trying to log in.. ("+field_login.getText()+")");
+                    database.log_ota_user(field_login.getText(), field_password.getText());
+                    if ( database.ota_user_id != -1){
+                        System.out.println("User succesfully logged in");
+                    }
+                    else{
+                        System.out.println("User failed to log in");
+                    }
+                    dispose();
+                }
+                else{
+                field_login.setText("Wrong login");
+                field_password.setText("password");
+                }
+            } catch (SQLException ex) {
+                field_login.setText("Program error");
+                field_login.setEnabled(false);
+                field_password.setEnabled(false);
+                label_login.setText("Error");
+                label_login.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_field_passwordKeyPressed
 
 
 

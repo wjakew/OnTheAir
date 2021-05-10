@@ -5,6 +5,7 @@ all rights reserved
  */
 package com.jakubwawak.ontheair;
 
+import com.jakubwawak.radioplayer.RadioStation;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,13 +14,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- *
+ *Object for maintaining database connection
  * @author jakubwawak
  */
 public class Database {
     
     // version of database 
-    final String version = "vC.0.6";
+    final String version = "v1.0.0";
     // header for logging data
     // connection object for maintaing connection to the database
     Connection con;
@@ -30,9 +31,9 @@ public class Database {
     public boolean evaluation_copy;
     
     public boolean connected;                      // flag for checking connection to the database
-    String ip;                              // ip data for the connector
-    String database_name;                   // name of the database
-    String database_user,database_password; // user data for cred
+    public String ip;                              // ip data for the connector
+    public String database_name;                   // name of the database
+    public String database_user,database_password; // user data for cred
     ArrayList<String> database_log;         // collection for storing data
     
     /**
@@ -42,6 +43,7 @@ public class Database {
      * @throws SQLException 
      */
     public Database() throws SQLException, ClassNotFoundException, SQLException{
+        System.out.println("Database object invoked...");
         con = null;
         database_log = new ArrayList<>();
         connected = false;
@@ -62,6 +64,7 @@ public class Database {
      * @throws SQLException 
      */
     public void connect(String ip,String database_name,String user,String password) throws SQLException{
+        System.out.println("Trying to connect...");
         this.ip = ip;
         this.database_name = database_name;
         database_user = user;
@@ -73,6 +76,7 @@ public class Database {
         try{
             con = DriverManager.getConnection(login_data);
             connected = true;
+            System.out.println("Connected succesfully");
         }catch(SQLException e){
             connected = false;
             System.out.println("Failed to connect to database ("+e.toString()+")");
@@ -82,7 +86,7 @@ public class Database {
     /**
      * Function for loading presets
      */
-    public ResultSet load_presets() throws SQLException{
+    public ResultSet unload_presets() throws SQLException{
         String query = "SELECT * FROM RADIOSTATION WHERE OTA_USER_ID = ?;";
         
         try{
@@ -102,6 +106,26 @@ public class Database {
         }
     }
     
+    /**
+     * Function for inserting presets
+     * @param radio
+     * @return Integer
+     */
+    public int insert_preset(RadioStation radio){
+        String query = "INSERT INTO RADIOSTATION\n" +
+                        "(ota_user_id,image_lib_id,playlist_id,radiostation_name,radiostation_url)\n" +
+                        "VALUES\n" +
+                        "(?,?,?,?,?);";
+        
+        try{
+            PreparedStatement ppst = con.prepareStatement(query);
+            // TODO
+            return 1;
+        }catch(SQLException e){
+            System.out.println("Error: "+e.toString());
+            return -1;
+        }
+    }
     
     /**
      * Function for logging ota user
@@ -154,6 +178,67 @@ public class Database {
             return "";
         }
         return "";
+    }
+    
+    /**
+     * Function for checking login availability
+     * @param login
+     * @return boolean
+     */
+    public boolean check_login_availability(String login){
+        String query = "SELECT ota_user_id FROM OTA_USER WHERE ota_user_login = ?;";
+        
+        try{
+            PreparedStatement ppst = con.prepareStatement(query);
+            
+            ppst.setString(1,login);
+            
+            ResultSet rs = ppst.executeQuery();
+            
+            if (rs.next()){
+                if (rs.getString("ota_user_login").equals(login)){
+                    return false;
+                }
+            }
+            return true;
+            
+        }catch(SQLException e){
+            System.out.println("Error: "+e.toString());
+            return false;
+        }
+    }
+    
+    
+    /**
+     * Function for register user on database
+     * @param name
+     * @param surname
+     * @param login
+     * @param password
+     * @return
+     * @throws SQLException 
+     */
+    public int register_user(String name,String surname,String login,String password) throws SQLException{
+        String query = "INSERT INTO OTA_USER\n" +
+                        "(OTA_USER_LOGIN,OTA_USER_NAME,OTA_USER_SURNAME,OTA_USER_PASSWORD)\n" +
+                        "VALUES\n" +
+                        "(?,?,?,?);";
+        
+        try{
+            PreparedStatement ppst = con.prepareStatement(query);
+            
+            ppst.setString(1,login);
+            ppst.setString(2,name);
+            ppst.setString(3,surname);
+            ppst.setString(4,password);
+            
+            ppst.execute();
+            return 1;
+            
+        }catch(SQLException e){
+            System.out.println("Error: "+e.toString());
+            return -1;
+        }
     }
     
 }

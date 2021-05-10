@@ -210,7 +210,7 @@ public class main_window2 extends javax.swing.JFrame {
 
     private void menu_presetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_presetsActionPerformed
         try {
-            new myaccount_window(this,true,boombox);
+            new myaccount_window(this,true,boombox,version);
         } catch (SQLException ex) {
             Logger.getLogger(main_window2.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

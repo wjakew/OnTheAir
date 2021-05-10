@@ -5,6 +5,7 @@ all rights reserved
  */
 package com.jakubwawak.radioplayer;
 
+import com.jakubwawak.ontheair.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Boombox {
     public String picked;
     
     public ResultSet database_data;
+    int synced;
     
     /**
      * Constructor
@@ -31,6 +33,7 @@ public class Boombox {
         radio_list.add(new RadioStation("Radio Nowy Swiat","https://stream.nowyswiat.online/mp3"));
         radio_list.add(new RadioStation("Radio LUZ","http://radioluz.pwr.edu.pl:8000/luzhifi.mp3"));
         picked = radio_list.get(0).radiostation_name;
+        synced = 0;
     }
     
     /**
@@ -44,6 +47,24 @@ public class Boombox {
             radio_list.add(new RadioStation(database_data));
         }
         picked = radio_list.get(0).radiostation_name;
+    }
+    
+    /**
+     * Function for syncing data with database
+     * @param database_data
+     * @throws SQLException 
+     */
+    public void sync_unload(ResultSet database_data) throws SQLException{
+        this.database_data = database_data;
+        while(database_data.next()){
+            radio_list.add(new RadioStation(database_data));
+            synced++;
+        }
+        picked = radio_list.get(0).radiostation_name;
+    }
+    
+    public void sync_load(Database database){
+        
     }
     
     /**

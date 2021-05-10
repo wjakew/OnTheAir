@@ -14,8 +14,6 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 
 /**
@@ -27,13 +25,19 @@ public class main_window extends javax.swing.JFrame {
     /**
      * Creates new form main_window
      */
-    String version = "v.1.0.0B4";
+    String version ;
     final String BGC_SRC = "bcg.jpg";
     Boombox boombox;
     RadioPlayer player;
     
-    public main_window() throws IOException {
+    /**
+     * Main constructors
+     * @param version
+     * @throws IOException 
+     */
+    public main_window(String version) throws IOException {
         boombox = new Boombox();
+        this.version = version;
         //this.setUndecorated(true);
         initComponents();
         load_window();
@@ -50,6 +54,7 @@ public class main_window extends javax.swing.JFrame {
         label_error.setVisible(false);
         label_radiostationname.setHorizontalAlignment(JLabel.CENTER);
         label_radiostationname.setVerticalAlignment(JLabel.CENTER);
+        label_version.setVisible(true);
         label_version.setText(version);
         load_default_presets();
     }
@@ -102,6 +107,7 @@ public class main_window extends javax.swing.JFrame {
         setTitle("OnTheAir");
 
         label_version.setFont(new java.awt.Font("Calisto MT", 0, 13)); // NOI18N
+        label_version.setForeground(new java.awt.Color(255, 255, 255));
         label_version.setText("v.1.0.0");
         label_version.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -223,7 +229,7 @@ public class main_window extends javax.swing.JFrame {
     private void label_iotionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_iotionsMouseClicked
         System.out.println("Account settings invoked");
         try {
-            new myaccount_window(this,true,boombox);
+            new myaccount_window(this,true,boombox,version);
         } catch (SQLException ex) {
             System.out.println("Database error: "+ex.toString());
         } catch (ClassNotFoundException ex) {
