@@ -30,6 +30,17 @@ public class addradio_window extends javax.swing.JDialog {
         this.setLocationRelativeTo(parent);
         setVisible(true);
     }
+    
+    
+    public addradio_window(java.awt.Frame parent, boolean modal,Boombox boombox) {
+        super(parent, modal);
+        session_boombox = boombox;
+        this.setUndecorated(true);
+        initComponents();
+        getContentPane().setBackground(Color.DARK_GRAY);
+        this.setLocationRelativeTo(parent);
+        setVisible(true);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

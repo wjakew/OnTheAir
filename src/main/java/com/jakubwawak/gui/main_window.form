@@ -76,9 +76,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="v.1.0.0"/>
       </Properties>
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="label_versionMouseClicked"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="label_radiostationname">
       <Properties>

@@ -15,8 +15,8 @@ import java.util.ArrayList;
  */
 public class RadioStation {
     
-    String radiostation_name;
-    String radiostation_url;
+    public String radiostation_name;
+    public String radiostation_url;
     int radiostation_id;
     int playlist_id;
     String radiostation_desc;

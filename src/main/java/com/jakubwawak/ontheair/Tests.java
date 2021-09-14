@@ -8,6 +8,8 @@ package com.jakubwawak.ontheair;
 import com.jakubwawak.gui.information_window;
 import com.jakubwawak.gui.main_window;
 import com.jakubwawak.gui.main_window2;
+import com.jakubwawak.gui.radiolist_window;
+import com.jakubwawak.radioplayer.Boombox;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.security.NoSuchAlgorithmException;
@@ -24,11 +26,8 @@ public class Tests {
     
     Tests(String version) throws IOException, MalformedURLException, JavaLayerException, NoSuchAlgorithmException, SQLException, ClassNotFoundException{
         System.out.println("Test object invoked...");
-        Database database = new Database();
-        database.connect("localhost","ontheair_database","root","password");
-        
-        new information_window(null,true,database,"X.X.XXX");
-        
+        Boombox b = new Boombox();
+        new radiolist_window(null,true,b);
     }
     
 }

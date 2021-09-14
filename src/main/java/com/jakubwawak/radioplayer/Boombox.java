@@ -18,7 +18,7 @@ import org.apache.commons.validator.UrlValidator;
 
 public class Boombox {
     
-    private ArrayList<RadioStation> radio_list;
+    public ArrayList<RadioStation> radio_list;
     public String picked;
     
     public ResultSet database_data;
@@ -61,10 +61,6 @@ public class Boombox {
             synced++;
         }
         picked = radio_list.get(0).radiostation_name;
-    }
-    
-    public void sync_load(Database database){
-        
     }
     
     /**
@@ -132,7 +128,21 @@ public class Boombox {
             return true;
         }
         return false;
-        
+    }
+    
+    /**
+     * Function for removing radio by given name
+     * @param name
+     * @return boolean
+     */
+    public boolean remove_radio(String name){
+        for(RadioStation rs : radio_list){
+            if ( rs.radiostation_name.equals(name)){
+                radio_list.remove(radio_list.indexOf(rs));
+                return true;
+            }
+        }
+        return false;
     }
     
     /**
@@ -146,4 +156,13 @@ public class Boombox {
         return urlValidator.isValid(url);
     }
     
+    /**
+     * Function for showing data from file with radio data
+     */
+    public void show_data(){
+        System.out.println("Data from object:");
+        for (RadioStation rs : radio_list){
+            System.out.println(rs.radiostation_name+" - "+rs.radiostation_url);
+        }
+    }
 }

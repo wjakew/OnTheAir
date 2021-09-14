@@ -17,7 +17,7 @@ import javazoom.jl.decoder.JavaLayerException;
  * @author jakubwawak
  */
 public class OnTheAir {
-    static String version = "v1.0.0B4";
+    static String version = "v1.0.0";
     /**
      * Flag for debugging
      */
@@ -33,12 +33,25 @@ public class OnTheAir {
      */
     public static void main(String[] args) throws IOException, MalformedURLException, JavaLayerException, NoSuchAlgorithmException, SQLException, ClassNotFoundException {
         show_header();
-        
         if ( debug ==  1 ){
             new Tests(version);   
         }
         else{
-            new main_window(version);
+            
+            Jukebox j = new Jukebox();
+            if ( j.error ){
+                System.out.println("Cannot find config file...");
+                j.save_file(j.boombox);
+                j.load_file();
+                j.load_data();
+            }
+            else{
+                System.out.println("Config file found... Loading data");
+                j.load_file();
+                j.load_data();
+                j.boombox.show_data();
+            }
+            new main_window(version,j.boombox);
         }
         
     }

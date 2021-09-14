@@ -35,8 +35,8 @@ public class main_window extends javax.swing.JFrame {
      * @param version
      * @throws IOException 
      */
-    public main_window(String version) throws IOException {
-        boombox = new Boombox();
+    public main_window(String version,Boombox boombox) throws IOException {
+        this.boombox = boombox;
         this.version = version;
         //this.setUndecorated(true);
         initComponents();
@@ -109,11 +109,6 @@ public class main_window extends javax.swing.JFrame {
         label_version.setFont(new java.awt.Font("Calisto MT", 0, 13)); // NOI18N
         label_version.setForeground(new java.awt.Color(255, 255, 255));
         label_version.setText("v.1.0.0");
-        label_version.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                label_versionMouseClicked(evt);
-            }
-        });
 
         label_radiostationname.setFont(new java.awt.Font("Elephant", 0, 36)); // NOI18N
         label_radiostationname.setForeground(new java.awt.Color(255, 255, 255));
@@ -194,7 +189,9 @@ public class main_window extends javax.swing.JFrame {
                     player = new RadioPlayer(selected_radio);
                     Thread player_thread = new Thread(player);
                     player_thread.start();
+                    label_radiostationname.setForeground(Color.YELLOW);
                     label_play.setText("Stop");
+                    label_play.setForeground(Color.red);
                     label_play.setVerticalAlignment(JLabel.CENTER);
                 }catch(Exception e){
                     label_error.setVisible(true);
@@ -205,6 +202,8 @@ public class main_window extends javax.swing.JFrame {
                 player.stop();
                 player = null;
                 label_play.setText("Play");
+                label_play.setForeground(Color.WHITE);
+                label_radiostationname.setForeground(Color.WHITE);
                 break;
             default:
                 System.out.println("Błąd");
@@ -236,12 +235,6 @@ public class main_window extends javax.swing.JFrame {
             System.out.println("Java error: "+ex.toString());
         }
     }//GEN-LAST:event_label_iotionsMouseClicked
-
-    private void label_versionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_versionMouseClicked
-        this.setUndecorated(false);
-        this.validate();
-        this.repaint();
-    }//GEN-LAST:event_label_versionMouseClicked
 
     
 

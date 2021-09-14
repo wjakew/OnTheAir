@@ -9,7 +9,7 @@ import com.jakubwawak.ontheair.Database;
 import java.awt.Color;
 
 /**
- *
+ *Function for displaying information
  * @author jakubwawak
  */
 public class information_window extends javax.swing.JDialog {
@@ -26,7 +26,7 @@ public class information_window extends javax.swing.JDialog {
         initComponents();
         load_window();
         label_version.setText(version);
-        getContentPane().setBackground(Color.LIGHT_GRAY);
+        getContentPane().setBackground(Color.ORANGE);
         this.setLocationRelativeTo(parent);
         setVisible(true);
     }
@@ -93,7 +93,7 @@ public class information_window extends javax.swing.JDialog {
         label_version.setText("1.0.0XX");
 
         label_date.setForeground(new java.awt.Color(255, 255, 255));
-        label_date.setText("05.2021");
+        label_date.setText("09.2021");
 
         label_register.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
         label_register.setForeground(new java.awt.Color(255, 255, 255));
@@ -108,49 +108,51 @@ public class information_window extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(label_version)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(label_date)
-                .addGap(17, 17, 17))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label_register, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(label_close, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addComponent(label_by))
+                        .addContainerGap()
+                        .addComponent(label_database))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(label_close))
+                        .addContainerGap()
+                        .addComponent(label_by)))
+                .addContainerGap(60, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(label_desc))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(label_register))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(label_database)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                        .addComponent(label_version)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(label_date)))
+                .addGap(17, 17, 17))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(12, 12, 12)
                 .addComponent(label_by)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(label_desc)
                 .addGap(8, 8, 8)
+                .addComponent(label_desc)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label_version)
                     .addComponent(label_date))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(label_register)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label_database)
-                .addGap(18, 18, 18)
+                .addGap(7, 7, 7)
                 .addComponent(label_close)
-                .addGap(12, 12, 12))
+                .addContainerGap())
         );
 
         pack();
